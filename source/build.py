@@ -49,20 +49,20 @@ def media(key, label, cls="", w=None, alt=None, pos=None, style=None):
 # and paste each reel's Instagram link below. Cards without a video show the poster
 # photo and open Instagram instead.
 REELS = [
-    {"file": "reel-1.mp4", "poster": "centre-counter-fruit-carving", "link": "", "title": "Centre counter"},
-    {"file": "reel-2.mp4", "poster": "buffet-line-wide",            "link": "", "title": "Buffet line"},
-    {"file": "reel-3.mp4", "poster": "dessert-falooda-cake",        "link": "", "title": "Dessert table"},
-    {"file": "reel-4.mp4", "poster": "outdoor-buffet-arches",       "link": "", "title": "Outdoor setup"},
+    {"file": "reel-1.mp4", "poster": "reels/reel-1", "link": "https://www.instagram.com/reel/DXHUDw0k05S/", "title": "Wedding day buffet"},
+    {"file": "reel-2.mp4", "poster": "reels/reel-2", "link": "https://www.instagram.com/reel/CvPrpKZJLu9/", "title": "Biriyani &amp; live counters"},
+    {"file": "reel-3.mp4", "poster": "reels/reel-3", "link": "", "title": "Reception night counters"},
+    {"file": "reel-4.mp4", "poster": "reels/reel-4", "link": "", "title": "Mocktails &amp; desserts"},
 ]
 
 def reels_section():
     cards = []
     for i, r in enumerate(REELS):
         has_video = os.path.exists(os.path.join(SRC, "assets", "video", r["file"]))
-        poster = f"assets/img/events/{r['poster']}.jpg"
+        poster = f"assets/img/{r['poster']}.jpg" if "/" in r["poster"] else f"assets/img/events/{r['poster']}.jpg"
         link = r["link"] or IG_URL
         if has_video:
-            inner = (f'<video class="reel-video" src="assets/video/{r["file"]}" poster="{poster}" muted loop playsinline preload="metadata" aria-label="{r["title"]} reel"></video>'
+            inner = (f'<video class="reel-video" src="assets/video/{r["file"]}" poster="{poster}" muted loop playsinline preload="metadata" aria-label="{r["title"].replace("&amp;","and")} reel"></video>'
                      f'<button class="reel-sound" type="button" aria-pressed="false" aria-label="Unmute">'
                      f'<svg class="i-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="m22 9-6 6M16 9l6 6"/></svg>'
                      f'<svg class="i-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>'
