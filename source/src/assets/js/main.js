@@ -146,9 +146,9 @@
     function tryPlay(v) {
       var p = v.play();
       if (p && p.catch) p.catch(function () { card(v).classList.add("paused"); });
-      card(v).classList.remove("paused");
+      card(v).classList.remove("paused"); card(v).classList.add("playing");
     }
-    function stop(v) { v.pause(); card(v).classList.add("paused"); }
+    function stop(v) { v.pause(); card(v).classList.add("paused"); card(v).classList.remove("playing"); }
     reels.forEach(function (v) {
       v.muted = true;
       card(v).classList.add("paused");

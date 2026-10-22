@@ -62,23 +62,24 @@ def reels_section():
         poster = f"assets/img/{r['poster']}.jpg" if "/" in r["poster"] else f"assets/img/events/{r['poster']}.jpg"
         link = r["link"] or IG_URL
         if has_video:
-            inner = (f'<video class="reel-video" src="assets/video/{r["file"]}" poster="{poster}" muted loop playsinline preload="metadata" aria-label="{r["title"].replace("&amp;","and")} reel"></video>'
+            inner = (f'<video class="reel-video" src="assets/video/{r["file"]}" poster="{poster}" muted loop playsinline preload="metadata" aria-label="A-one wedding reel {i+1}"></video>'
                      f'<button class="reel-sound" type="button" aria-pressed="false" aria-label="Unmute">'
                      f'<svg class="i-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="m22 9-6 6M16 9l6 6"/></svg>'
                      f'<svg class="i-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>'
                      f'<span>Tap for sound</span></button>'
                      f'<button class="reel-play" type="button" aria-label="Play">▶</button>')
         else:
-            inner = (f'<img src="{poster}" alt="{r["title"]}" loading="lazy" decoding="async">'
+            inner = (f'<img src="{poster}" alt="A-one wedding reel {i+1}" loading="lazy" decoding="async">'
                      f'<span class="reel-play static" aria-hidden="true">▶</span>')
-        foot = f'<a class="reel-foot" href="{link}" target="_blank" rel="noopener">{ICON["ig"]}<span>{r["title"]}</span><em>View on Instagram</em></a>'
-        cards.append(f'<div class="reel{"" if has_video else " no-video"}" data-reveal="{i*80}">{('<div class="reel-frame">' + inner + '</div>') if has_video else ('<a class="reel-frame" href="' + link + '" target="_blank" rel="noopener" aria-label="Watch ' + r["title"] + ' on Instagram">' + inner + '</a>')}{foot}</div>')
-    return f'''<section class="section band reels-band"><div class="wrap">
-  <div class="reels-head">
-    <div class="head"><span class="eyebrow">On Instagram</span><h2>Watch us at work</h2><p class="lead">Short clips from our latest events. Follow {IG_HANDLE} for new setups every week.</p></div>
-    <a class="btn btn-primary ig-btn" href="{IG_URL}" target="_blank" rel="noopener">{ICON["ig"]} Follow {IG_HANDLE}</a>
-  </div>
+        ig = f'<a class="reel-ig" href="{link}" target="_blank" rel="noopener" aria-label="Open this reel on Instagram">{ICON["ig"]}</a>'
+        if has_video:
+            cards.append(f'<div class="reel" data-reveal="{i*80}"><div class="reel-frame">{inner}{ig}</div></div>')
+        else:
+            cards.append(f'<div class="reel no-video" data-reveal="{i*80}"><a class="reel-frame" href="{link}" target="_blank" rel="noopener" aria-label="Watch on Instagram">{inner}</a></div>')
+    return f'''<section class="section reels-band"><div class="wrap">
+  <div class="head center"><span class="eyebrow">On Instagram</span><h2>Inside our weddings</h2><p class="lead">The food, the service and the stage, as our guests see it. Tap any reel for sound.</p></div>
   <div class="reels">{"".join(cards)}</div>
+  <div class="reels-cta"><a class="btn btn-gold ig-btn" href="{IG_URL}" target="_blank" rel="noopener">{ICON["ig"]} Follow {IG_HANDLE}</a><span>New reels from every event</span></div>
 </div></section>'''
 
 ICON = {
