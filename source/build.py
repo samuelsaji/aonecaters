@@ -10,6 +10,9 @@ SRC = os.path.join(ROOT, "src")
 
 PHONE = "+91 95445 41075"
 PHONE_RAW = "919544541075"
+PHONES = [("+91 95445 41075","919544541075"),("+91 99953 27413","919995327413"),("+91 70126 90063","917012690063")]
+def phone_links(sep="<br>"):
+    return sep.join(f'<a href="tel:+{r}">{n}</a>' for n,r in PHONES)
 
 # Real A-one event photos (assets/img/events). Add new ones here, then use the key in media().
 IMG = {
@@ -92,7 +95,7 @@ FOOTER = f'''<footer class="site-footer">
       <div><h4>Explore</h4><ul>{"".join(f'<li><a href="{h}">{t}</a></li>' for h,t in NAV)}</ul></div>
       <div><h4>We cater</h4><ul><li><a href="services.html#weddings">Weddings</a></li><li><a href="services.html#sadya">Kerala Sadya</a></li><li><a href="services.html#celebrations">Family celebrations</a></li><li><a href="services.html#corporate">Corporate events</a></li><li><a href="services.html#outdoor">Outdoor &amp; live counters</a></li><li><a href="services.html#desserts">Dessert stations</a></li></ul></div>
       <div><h4>Talk to us</h4><ul>
-        <li><span>Call / WhatsApp</span><br><a href="tel:+{PHONE_RAW}">{PHONE}</a></li>
+        <li><span>Call us</span><br>{phone_links()}</li><li><span>WhatsApp</span><br><a href="https://wa.me/{PHONE_RAW}" target="_blank" rel="noopener">{PHONE}</a></li>
         <li><span>Based in</span><br>Kothamangalam, Ernakulam, Kerala</li>
         <li><span>Bookings</span><br>Open all days</li>
       </ul></div>
@@ -100,7 +103,7 @@ FOOTER = f'''<footer class="site-footer">
     <div class="copy"><span>© <span data-year>2026</span> A-one Caterers &amp; Events. All rights reserved.</span><span>Website by Codescape Innovations</span></div>
   </div>
 </footer>
-<a class="wa" href="https://wa.me/{PHONE_RAW}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">{ICON["wa"]}</a>'''
+<a class="wa" href="https://wa.me/{PHONE_RAW}?text=Hi%20A-one%20Caterers%2C%20I%27d%20like%20to%20know%20more%20about%20your%20catering." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">{ICON["wa"]}<span>Chat on WhatsApp</span></a>'''
 
 HEAD = '''<title>{title}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -346,7 +349,8 @@ CONTACT = page_hero("Contact", "Let's plan the food for your day",
     <h2>We'd love to hear about your event</h2>
     <p class="lead">Bookings fill up fast in wedding season, so reach out as soon as you have a date.</p>
     <div class="info">
-      <div class="info-item"><div class="icon">{ICON["phone"]}</div><div><b>Call or WhatsApp</b><a href="tel:+{PHONE_RAW}">{PHONE}</a></div></div>
+      <div class="info-item"><div class="icon">{ICON["phone"]}</div><div><b>Call us</b><span class="phones">{phone_links("")}</span></div></div>
+      <div class="info-item"><div class="icon">{ICON["wa"]}</div><div><b>Chat on WhatsApp</b><a href="https://wa.me/{PHONE_RAW}" target="_blank" rel="noopener">{PHONE} · tap to open chat</a></div></div>
       <div class="info-item"><div class="icon">{ICON["pin"]}</div><div><b>Based in</b><span>Kothamangalam, Ernakulam, Kerala</span></div></div>
       <div class="info-item"><div class="icon">{ICON["clock"]}</div><div><b>Enquiries</b><span>Every day, 8 am – 9 pm</span></div></div>
     </div>
@@ -379,7 +383,7 @@ PAGES = [
   ("about.html","About · A-one Caterers","Our story: a family kitchen cooking for Kerala's big days since 1999.","about.html",ABOUT),
   ("services.html","Services · A-one Caterers","Wedding catering, Kerala sadya, family celebrations, corporate events and live counters.","services.html",SERVICES),
   ("gallery.html","Gallery · A-one Caterers","Photos of A-one Caterers food, table setups and events.","gallery.html",GALLERY),
-  ("contact.html","Contact · A-one Caterers","Get a catering quote from A-one Caterers. Call or WhatsApp +91 95445 41075.","contact.html",CONTACT),
+  ("contact.html","Contact · A-one Caterers","Get a catering quote from A-one Caterers. Call +91 95445 41075, +91 99953 27413 or +91 70126 90063, or chat on WhatsApp.","contact.html",CONTACT),
 ]
 
 def body(active, main):

@@ -312,3 +312,12 @@ body.leaving{opacity:0;transition:opacity .25s}
 
 .masonry .media.port{aspect-ratio:9/16}
 .split .media img,.card .media img{object-position:50% 60%}
+
+/* Floating WhatsApp: labelled pill on wider screens, gentle pulse */
+.wa{width:auto;min-width:56px;padding:0 16px;gap:10px;display:flex;align-items:center;justify-content:center;border-radius:999px;text-decoration:none;font-weight:600;font-size:.95rem}
+.wa span{display:none}
+@media (min-width:700px){.wa{padding:0 20px 0 16px}.wa span{display:inline}}
+.wa::before{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 0 rgba(31,143,78,.55);animation:waPulse 2.6s ease-out infinite}
+@keyframes waPulse{0%{box-shadow:0 0 0 0 rgba(31,143,78,.5)}70%{box-shadow:0 0 0 16px rgba(31,143,78,0)}100%{box-shadow:0 0 0 0 rgba(31,143,78,0)}}
+.info-item .phones{display:grid;gap:2px}
+.info-item .phones a{user-select:all}
