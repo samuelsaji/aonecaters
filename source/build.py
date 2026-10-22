@@ -77,9 +77,9 @@ def reels_section():
         else:
             cards.append(f'<div class="reel no-video" data-reveal="{i*80}"><a class="reel-frame" href="{link}" target="_blank" rel="noopener" aria-label="Watch on Instagram">{inner}</a></div>')
     return f'''<section class="section reels-band"><div class="wrap">
-  <div class="head center"><span class="eyebrow">On Instagram</span><h2>Inside our weddings</h2><p class="lead">The food, the service and the stage, as our guests see it. Tap any reel for sound.</p></div>
+  <div class="head center"><span class="eyebrow">On Instagram</span><h2>Inside our weddings</h2><p class="lead">The food, the service and the stage, as our guests see it.</p></div>
   <div class="reels">{"".join(cards)}</div>
-  <div class="reels-cta"><a class="btn btn-gold ig-btn" href="{IG_URL}" target="_blank" rel="noopener">{ICON["ig"]} Follow {IG_HANDLE}</a><span>New reels from every event</span></div>
+  <div class="reels-cta"><a class="btn btn-gold ig-btn" href="{IG_URL}" target="_blank" rel="noopener">{ICON["ig"]} Follow {IG_HANDLE}</a></div>
 </div></section>'''
 
 ICON = {
