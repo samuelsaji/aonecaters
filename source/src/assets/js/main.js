@@ -137,4 +137,40 @@
       done.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "nearest" });
     });
   }
+
+  // Instagram reels: play muted while on screen, pause when scrolled away, tap to unmute
+  var reels = Array.prototype.slice.call(document.querySelectorAll(".reel-video"));
+  if (reels.length) {
+    var userPaused = new WeakSet();
+    function card(v) { return v.closest(".reel"); }
+    function tryPlay(v) {
+      var p = v.play();
+      if (p && p.catch) p.catch(function () { card(v).classList.add("paused"); });
+      card(v).classList.remove("paused");
+    }
+    function stop(v) { v.pause(); card(v).classList.add("paused"); }
+    reels.forEach(function (v) {
+      v.muted = true;
+      card(v).classList.add("paused");
+      var btn = card(v).querySelector(".reel-sound");
+      var play = card(v).querySelector(".reel-play");
+      btn.addEventListener("click", function () {
+        var unmute = v.muted;
+        reels.forEach(function (o) { o.muted = true; card(o).querySelector(".reel-sound").setAttribute("aria-pressed", "false"); card(o).querySelector(".reel-sound").setAttribute("aria-label", "Unmute"); });
+        if (unmute) { v.muted = false; btn.setAttribute("aria-pressed", "true"); btn.setAttribute("aria-label", "Mute"); userPaused.delete(v); tryPlay(v); }
+      });
+      play.addEventListener("click", function () { userPaused.delete(v); tryPlay(v); });
+      v.addEventListener("click", function () { if (v.paused) { userPaused.delete(v); tryPlay(v); } else { userPaused.add(v); stop(v); } });
+    });
+    if (!reduce && "IntersectionObserver" in window) {
+      var rio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          var v = en.target;
+          if (en.isIntersecting && en.intersectionRatio >= 0.5) { if (!userPaused.has(v)) tryPlay(v); }
+          else if (!v.paused) { stop(v); }
+        });
+      }, { threshold: [0, 0.5] });
+      reels.forEach(function (v) { rio.observe(v); });
+    }
+  }
 })();

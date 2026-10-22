@@ -10,6 +10,8 @@ SRC = os.path.join(ROOT, "src")
 
 PHONE = "+91 95445 41075"
 PHONE_RAW = "919544541075"
+IG_URL = "https://www.instagram.com/aone_caterers_/"
+IG_HANDLE = "@aone_caterers_"
 PHONES = [("+91 95445 41075","919544541075"),("+91 99953 27413","919995327413"),("+91 70126 90063","917012690063")]
 def phone_links(sep="<br>"):
     return sep.join(f'<a href="tel:+{r}">{n}</a>' for n,r in PHONES)
@@ -41,6 +43,43 @@ def media(key, label, cls="", w=None, alt=None, pos=None, style=None):
     box = f' style="{style}"' if style else ""
     return (f'<div class="media {cls}"{box} data-label="{label}">'
             f'<img src="assets/img/events/{IMG[key]}.jpg" alt="{alt or label}" loading="lazy" decoding="async"{st}></div>')
+
+# Instagram reels shown on the Home page.
+# Drop the reel videos into src/assets/video/ as reel-1.mp4 ... reel-4.mp4 (newest first)
+# and paste each reel's Instagram link below. Cards without a video show the poster
+# photo and open Instagram instead.
+REELS = [
+    {"file": "reel-1.mp4", "poster": "centre-counter-fruit-carving", "link": "", "title": "Centre counter"},
+    {"file": "reel-2.mp4", "poster": "buffet-line-wide",            "link": "", "title": "Buffet line"},
+    {"file": "reel-3.mp4", "poster": "dessert-falooda-cake",        "link": "", "title": "Dessert table"},
+    {"file": "reel-4.mp4", "poster": "outdoor-buffet-arches",       "link": "", "title": "Outdoor setup"},
+]
+
+def reels_section():
+    cards = []
+    for i, r in enumerate(REELS):
+        has_video = os.path.exists(os.path.join(SRC, "assets", "video", r["file"]))
+        poster = f"assets/img/events/{r['poster']}.jpg"
+        link = r["link"] or IG_URL
+        if has_video:
+            inner = (f'<video class="reel-video" src="assets/video/{r["file"]}" poster="{poster}" muted loop playsinline preload="metadata" aria-label="{r["title"]} reel"></video>'
+                     f'<button class="reel-sound" type="button" aria-pressed="false" aria-label="Unmute">'
+                     f'<svg class="i-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="m22 9-6 6M16 9l6 6"/></svg>'
+                     f'<svg class="i-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>'
+                     f'<span>Tap for sound</span></button>'
+                     f'<button class="reel-play" type="button" aria-label="Play">▶</button>')
+        else:
+            inner = (f'<img src="{poster}" alt="{r["title"]}" loading="lazy" decoding="async">'
+                     f'<span class="reel-play static" aria-hidden="true">▶</span>')
+        foot = f'<a class="reel-foot" href="{link}" target="_blank" rel="noopener">{ICON["ig"]}<span>{r["title"]}</span><em>View on Instagram</em></a>'
+        cards.append(f'<div class="reel{"" if has_video else " no-video"}" data-reveal="{i*80}">{('<div class="reel-frame">' + inner + '</div>') if has_video else ('<a class="reel-frame" href="' + link + '" target="_blank" rel="noopener" aria-label="Watch ' + r["title"] + ' on Instagram">' + inner + '</a>')}{foot}</div>')
+    return f'''<section class="section band reels-band"><div class="wrap">
+  <div class="reels-head">
+    <div class="head"><span class="eyebrow">On Instagram</span><h2>Watch us at work</h2><p class="lead">Short clips from our latest events. Follow {IG_HANDLE} for new setups every week.</p></div>
+    <a class="btn btn-primary ig-btn" href="{IG_URL}" target="_blank" rel="noopener">{ICON["ig"]} Follow {IG_HANDLE}</a>
+  </div>
+  <div class="reels">{"".join(cards)}</div>
+</div></section>'''
 
 ICON = {
  "arrow": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
@@ -88,14 +127,14 @@ FOOTER = f'''<footer class="site-footer">
         <p>Home-style Kerala cooking and full event catering since 1999. Based in Kothamangalam, catering across Kerala.</p>
         <div class="social">
           <a href="https://wa.me/{PHONE_RAW}" target="_blank" rel="noopener" aria-label="WhatsApp">{ICON["wa"]}</a>
-          <a href="#" aria-label="Instagram">{ICON["ig"]}</a>
+          <a href="{IG_URL}" target="_blank" rel="noopener" aria-label="Instagram {IG_HANDLE}">{ICON["ig"]}</a>
           <a href="#" aria-label="Facebook">{ICON["fb"]}</a>
         </div>
       </div>
       <div><h4>Explore</h4><ul>{"".join(f'<li><a href="{h}">{t}</a></li>' for h,t in NAV)}</ul></div>
       <div><h4>We cater</h4><ul><li><a href="services.html#weddings">Weddings</a></li><li><a href="services.html#sadya">Kerala Sadya</a></li><li><a href="services.html#celebrations">Family celebrations</a></li><li><a href="services.html#corporate">Corporate events</a></li><li><a href="services.html#outdoor">Outdoor &amp; live counters</a></li><li><a href="services.html#desserts">Dessert stations</a></li></ul></div>
       <div><h4>Talk to us</h4><ul>
-        <li><span>Call us</span><br>{phone_links()}</li><li><span>WhatsApp</span><br><a href="https://wa.me/{PHONE_RAW}" target="_blank" rel="noopener">{PHONE}</a></li>
+        <li><span>Call us</span><br>{phone_links()}</li><li><span>Instagram</span><br><a href="{IG_URL}" target="_blank" rel="noopener">{IG_HANDLE}</a></li><li><span>WhatsApp</span><br><a href="https://wa.me/{PHONE_RAW}" target="_blank" rel="noopener">{PHONE}</a></li>
         <li><span>Based in</span><br>Kothamangalam, Ernakulam, Kerala</li>
         <li><span>Bookings</span><br>Open all days</li>
       </ul></div>
@@ -212,6 +251,7 @@ HOME = f'''
   </div>
   <div style="text-align:center;margin-top:32px"><a class="btn btn-primary" href="gallery.html">Open gallery {ICON["arrow"]}</a></div>
 </div></section>
+{reels_section()}
 {CTA}
 '''
 
@@ -351,6 +391,7 @@ CONTACT = page_hero("Contact", "Let's plan the food for your day",
     <div class="info">
       <div class="info-item"><div class="icon">{ICON["phone"]}</div><div><b>Call us</b><span class="phones">{phone_links("")}</span></div></div>
       <div class="info-item"><div class="icon">{ICON["wa"]}</div><div><b>Chat on WhatsApp</b><a href="https://wa.me/{PHONE_RAW}" target="_blank" rel="noopener">{PHONE} · tap to open chat</a></div></div>
+      <div class="info-item"><div class="icon">{ICON["ig"]}</div><div><b>Follow us on Instagram</b><a href="{IG_URL}" target="_blank" rel="noopener">{IG_HANDLE}</a></div></div>
       <div class="info-item"><div class="icon">{ICON["pin"]}</div><div><b>Based in</b><span>Kothamangalam, Ernakulam, Kerala</span></div></div>
       <div class="info-item"><div class="icon">{ICON["clock"]}</div><div><b>Enquiries</b><span>Every day, 8 am – 9 pm</span></div></div>
     </div>
