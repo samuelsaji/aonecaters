@@ -173,4 +173,12 @@
       reels.forEach(function (v) { rio.observe(v); });
     }
   }
+
+  // Hide the floating WhatsApp button while the footer is visible
+  var waBtn = document.querySelector(".wa"), foot = document.querySelector(".site-footer");
+  if (waBtn && foot && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      waBtn.classList.toggle("wa-hide", entries[0].isIntersecting);
+    }).observe(foot);
+  }
 })();

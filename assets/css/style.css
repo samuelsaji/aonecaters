@@ -374,3 +374,7 @@ body.leaving{opacity:0;transition:opacity .25s}
 .credit{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#BFA8A2;font-size:.8rem;opacity:.8;transition:opacity .2s}
 .credit:hover,.credit:focus-visible{opacity:1}
 .credit img{height:10px;width:auto;opacity:.9}
+
+/* Hide floating WhatsApp once the footer is on screen */
+.wa{transition:transform .3s var(--ease),opacity .3s,visibility .3s}
+.wa.wa-hide{opacity:0;visibility:hidden;transform:translateY(16px);pointer-events:none}
