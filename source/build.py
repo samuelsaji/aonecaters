@@ -140,7 +140,7 @@ FOOTER = f'''<footer class="site-footer">
         <li><span>Bookings</span><br>Open all days</li>
       </ul></div>
     </div>
-    <div class="copy"><span>© <span data-year>2026</span> A-one Caterers &amp; Events. All rights reserved.</span><span>Website by Codescape Innovations</span></div>
+    <div class="copy"><span>© <span data-year>2026</span> A-one Caterers &amp; Events. All rights reserved.</span><a class="credit" href="https://thecodescape.in/?utm_source=aonecaters&amp;utm_medium=footer" target="_blank" rel="noopener" aria-label="Website by Codescape"><span>Website by</span><img src="assets/img/codescape-wordmark.png" alt="Codescape" width="89" height="10"></a></div>
   </div>
 </footer>
 <a class="wa" href="https://wa.me/{PHONE_RAW}?text=Hi%20A-one%20Caterers%2C%20I%27d%20like%20to%20know%20more%20about%20your%20catering." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">{ICON["wa"]}<span>Chat on WhatsApp</span></a>'''

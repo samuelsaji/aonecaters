@@ -369,3 +369,8 @@ body.leaving{opacity:0;transition:opacity .25s}
 .reel.playing .reel-frame{border-color:var(--gold)}
 .reels-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 18px;margin-top:clamp(40px,6vw,72px);color:#CDB8B2;font-size:.9rem}
 @media (max-width:520px){.reels-cta{margin-top:28px}}
+
+/* Codescape footer credit */
+.credit{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#BFA8A2;font-size:.8rem;opacity:.8;transition:opacity .2s}
+.credit:hover,.credit:focus-visible{opacity:1}
+.credit img{height:10px;width:auto;opacity:.9}
