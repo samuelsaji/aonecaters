@@ -110,7 +110,7 @@
 
   // Enquiry form -> Google Sheet + email (Apps Script). Falls back to WhatsApp if not set up.
   // Paste the Apps Script web app URL (ends in /exec) here:
-  var SCRIPT_URL = "";
+  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOhmVT4ktLgEoWouYpAyBrFaNpsAIeskdJ1UaXVQ2MjW8aqI4LtqzUEy-jjjrnhOUx/exec";
   var form = document.getElementById("enquiry");
   if (form) {
     var btn = document.getElementById("f-submit"), status = document.getElementById("f-status"), done = document.getElementById("form-done");
