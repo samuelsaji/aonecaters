@@ -4,7 +4,7 @@
  * Setup (one time):
  * 1. Create a Google Sheet, e.g. "A-one Website Enquiries".
  * 2. In the sheet: Extensions > Apps Script. Delete the sample code and paste this file.
- * 3. Set NOTIFY_EMAIL below to the address that should get each enquiry.
+ * 3. NOTIFY_EMAIL is set to aonecaterers1@gmail.com (change if needed).
  * 4. Deploy > New deployment > type "Web app".
  *      Execute as: Me
  *      Who has access: Anyone
@@ -12,7 +12,7 @@
  * 5. Copy the Web app URL (ends in /exec) into SCRIPT_URL in assets/js/main.js.
  */
 
-const NOTIFY_EMAIL = 'CHANGE_ME@gmail.com'; // comma-separate for several people
+const NOTIFY_EMAIL = 'aonecaterers1@gmail.com'; // comma-separate for several people
 const SHEET_NAME = 'Enquiries';
 const HEADERS = ['Received', 'Name', 'Phone', 'Event', 'Event date', 'Guests', 'Venue / location', 'Menu ideas or questions', 'WhatsApp link'];
 
