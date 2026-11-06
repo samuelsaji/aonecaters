@@ -378,3 +378,7 @@ body.leaving{opacity:0;transition:opacity .25s}
 /* Hide floating WhatsApp once the footer is on screen */
 .wa{transition:transform .3s var(--ease),opacity .3s,visibility .3s}
 .wa.wa-hide{opacity:0;visibility:hidden;transform:translateY(16px);pointer-events:none}
+
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form{position:relative}
+.form-done b{font-weight:600}

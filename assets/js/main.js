@@ -108,9 +108,13 @@
     });
   }
 
-  // Enquiry form → prepared WhatsApp message (no server needed)
+  // Enquiry form -> Google Sheet + email (Apps Script). Falls back to WhatsApp if not set up.
+  // Paste the Apps Script web app URL (ends in /exec) here:
+  var SCRIPT_URL = "";
   var form = document.getElementById("enquiry");
   if (form) {
+    var btn = document.getElementById("f-submit"), status = document.getElementById("f-status"), done = document.getElementById("form-done");
+    var btnHTML = btn.innerHTML;
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var ok = true;
@@ -122,19 +126,33 @@
       });
       if (!ok) return;
       var v = function (id) { return (document.getElementById(id).value || "").trim(); };
-      var msg = "Hello A-one Caterers, I'd like a quote.%0A" +
-        "Name: " + encodeURIComponent(v("name")) + "%0A" +
-        "Phone: " + encodeURIComponent(v("phone")) + "%0A" +
-        "Event: " + encodeURIComponent(v("event")) + "%0A" +
-        "Date: " + encodeURIComponent(v("date") || "Not decided") + "%0A" +
-        "Guests: " + encodeURIComponent(v("guests") || "-") + "%0A" +
-        "Location: " + encodeURIComponent(v("venue") || "-") + "%0A" +
-        "Notes: " + encodeURIComponent(v("message") || "-");
-      var url = "https://wa.me/" + PHONE + "?text=" + msg;
-      var done = document.getElementById("form-done");
-      done.querySelector("a").href = url;
-      done.hidden = false;
-      done.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "nearest" });
+      var waText = "Hello A-one Caterers, I'd like a quote.\n" +
+        "Name: " + v("name") + "\nPhone: " + v("phone") + "\nEvent: " + v("event") +
+        "\nDate: " + (v("date") || "Not decided") + "\nGuests: " + (v("guests") || "-") +
+        "\nLocation: " + (v("venue") || "-") + "\nNotes: " + (v("message") || "-");
+      var waUrl = "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(waText);
+      done.querySelector("a").href = waUrl;
+
+      function showDone() {
+        done.hidden = false;
+        done.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "nearest" });
+      }
+      if (!SCRIPT_URL) {
+        done.innerHTML = 'Your enquiry is ready. <a href="' + waUrl + '" target="_blank" rel="noopener">Send it on WhatsApp →</a>';
+        showDone();
+        return;
+      }
+      btn.disabled = true; btn.textContent = "Sending…"; done.hidden = true;
+      fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: new URLSearchParams(new FormData(form)) })
+        .then(function () {
+          form.reset();
+          status.textContent = "";
+          showDone();
+        })
+        .catch(function () {
+          status.textContent = "Your enquiry could not be sent. Check your connection and try again, or call +91 95445 41075.";
+        })
+        .then(function () { btn.disabled = false; btn.innerHTML = btnHTML; });
     });
   }
 

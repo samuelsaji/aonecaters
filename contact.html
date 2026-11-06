@@ -64,9 +64,10 @@
       <div class="field"><label for="venue">Venue / location</label><input id="venue" name="venue" placeholder="Hall or place"><span class="err"></span></div>
     </div>
     <div class="field"><label for="message">Menu ideas or questions</label><textarea id="message" name="message" placeholder="Veg / non-veg, sadya or buffet, dishes you'd like…"></textarea><span class="err"></span></div>
-    <button class="btn btn-primary" type="submit">Prepare my enquiry <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-    <p class="form-note">Your enquiry is sent to us on WhatsApp, so you'll get a reply on your phone.</p>
-    <div class="form-done" id="form-done" hidden>Your enquiry is ready. <a href="#" target="_blank" rel="noopener">Send it on WhatsApp →</a></div>
+    <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+    <button class="btn btn-primary" id="f-submit" type="submit">Send enquiry <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    <p class="form-note" id="f-status" role="status">Our team will call you back on the number you give.</p>
+    <div class="form-done" id="form-done" hidden><b>Thank you. We've received your enquiry.</b><br>We'll call you soon to talk about the menu. For a faster reply, <a href="#" target="_blank" rel="noopener">send it on WhatsApp too →</a></div>
   </form>
 </div></section>
 </main>
